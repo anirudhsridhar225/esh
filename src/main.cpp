@@ -1,16 +1,20 @@
+#include "include/shell.h"
 #include <iostream>
 
-// TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
 
-    int i = 1; // 1 indexed because i don't want the executable itself to be counted as one of the arguments
+    int i = 1; // 1 indexed because i don't want the executable itself to be
+               // counted as one of the arguments
+
+    std::string prompt = get_prompt();
+    std::string cmd;
 
     while (true) {
-        std::cout << argv[i++] << "\n";
+        std::cout << prompt;
+        int result = handle_input(cmd);
 
-        if (i >= argc) {
+        if (result == -1)
             break;
-        }
     }
 
     return 0;
