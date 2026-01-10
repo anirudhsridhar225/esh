@@ -5,13 +5,11 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-#include <string>
-
 // returns the prompt
-std::string get_prompt();
+char *get_prompt(char *prompt);
 
 // reads input, executes command
 // returns -1 if exit, 1 otherwise
-int handle_input(std::string& cmd);
+int handle_input(char *cmd);
 
 #endif // SHELL_H

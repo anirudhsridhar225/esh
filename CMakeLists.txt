@@ -1,13 +1,12 @@
-cmake_minimum_required(VERSION 3.31)
+cmake_minimum_required(VERSION 3.21)
+
 project(esh)
 
-set(CMAKE_CXX_STANDARD 26)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIGURATION>")
 
-find_package(Boost REQUIRED)
-
-add_executable(esh 
-    src/main.cpp
-    src/shell.cpp
-    src/autocompletion.cpp
+add_executable(
+    esh
+    src/main.c
+    src/shell.c
 )
-target_link_libraries(esh PRIVATE Boost::boost pthread)
