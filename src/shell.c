@@ -1,4 +1,5 @@
 #include "include/shell.h"
+#include <stdio.h>
 #include <string.h>
 
 #ifdef _WIN32
@@ -20,33 +21,28 @@ char *get_prompt(char *prompt) {
     DWORD username_len = UNLEN + 1;
 
     if (!GetComputerName(hostname, &size)) {
-        strcpy(hostname, "Unknown");
+        strncpy(hostname, "Unknown", size);
     }
 
     if (!GetUserName(username, &username_len)) {
-        strcpy(username, "Unknown");
+        strncpy(username, "Unknown", username_len);
     }
 #else
     struct passwd *p = getpwuid(geteuid());
     char username[1024];
 
     if (gethostname(hostname, sizeof(hostname)) != 0) {
-        strcpy(hostname, "Unknown");
+        strncpy(hostname, "Unknown", 1032);
     }
 
     if (p) {
-        strcpy(username, p->pw_name);
+        strncpy(username, p->pw_name, 1024);
     } else {
-        strcpy(username, "Unknown");
+        strncpy(username, "Unknown", 1024);
     }
 #endif /* ifdef _WIN32 */
 
-    strcat(prompt, "~> ");
-    strcat(prompt, "[");
-    strcat(prompt, hostname);
-    strcat(prompt, "@");
-    strcat(prompt, username);
-    strcat(prompt, "] ");
+    sprintf(prompt, "~> [%s@%s] ", hostname, username);
 
     return prompt;
 }
